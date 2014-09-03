@@ -5,4 +5,4 @@ Base
 <li>Tell users that you used this as base for game;</li>
 <li>Tell me that you used this base and send me link to game.</li>
 </ol>
-<p>Contact me on: <i>jakov.manjkas@gmail.com.</i></p>
+<p>Contact me on: <i>jakov.manjkas@gmail.com</i>.</p>
