@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Explanation of Base for game</h1>
+
+<h2>First section: Bacis game class</h2>
+<h4>In this section I will explain minimal code which class pusher needs</h4>
+
+<p>You have to use first line of code: <code> import pygame </code></p>
+<p>You also have to create game class:</p>
+
+<pre>
+class game:
+
+    def __init__(self):
+        pass
+
+    def main(self):
+        pass
+
+    def change(self, what):
+        self.what = what
+</pre>
+
+<p>Class' name is changeable, main function too, but change must call change and have
+two atributes</p>
+<p>It will be good to have this three lines in __init__:</p>
+
+<code>
+<p>self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)</p>
+<p>self.running = True</p>
+<p>pygame.init()</p>
+</code>
+
+<p>Name of self.running is changable, but self.screen and self.mouse must call self.screen
+and self.mouse.</p>
+<p>For working of class pusher you will need to add quite small loop:<p>
+
+<pre>
+while self.running:
+    for event in pygame.event.get():
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            self.mouse = True
+        else:
+            self.mouse = False
+</pre>
+
+<p>In fact this is all what pusher needs,</p>
+<p>but it will be good if on end of the file you write:</p>
+
+<code>
+<p>Game = game()</p>
+<p>Game.main()</p>
+</code>
+
+<p>and if you add some way for exit.</p>
+<p>All other things that pusher need will be explained in second section</p>
+<p>and depends on pusher itself</p>
+
+<p>Section one uses code lines:</p>
+<p>1, 85-89, 91, 92, 103-105, 108-111, 125 and 126; recomandation: 152 and 153.</p>
+
+<hr>
+
+<h2>Second section: using pusher</h2>
+<h4>In this section I will explain using class pusher</h4>
+
+<h3>Part one: Documentation</h3>
+<h5>In this part I will create typical documentation</h5>
+
+<p><code>class <b>pusher</b>:</class></p>
+<p><code>pusher(x1, y1, image, obj, do1=None, do2=None, time=0, pos_do=None,
+        anti_pos_do=None, infinity=0, proces=2)</code> -> pusher</p>
+
+<pre>
+    This is only class in this base.
+    It is maked for easy creation of main menu.
+    x1 and y1 is position.
+    image is any surface that shows on
+    obj.screen.
+    When mouse is on image it call
+    obj.change(pos_do), if obj.mouse
+    then it call obj.change(do1).
+    Then, when time(in miliseconds) pass
+    it call obj.change(do2) and disapeare.
+    Between it call obj.change(do1) and
+    obj.change(do2) variable proces is 1,
+    before it is 2 and after it is 0.
+    When proces isn't 0 image still blit on obj.screen,
+    but only when proces is 2 pos_do and anti_pos_do works.
+    If infinity is 2 when proces should become 1 it still 2,
+    but it still call obj.change(do1).
+    If infinity is 1 when proces should become 0 it become 2,
+    but it still call obj.change(do2).
+    I didn't use infinity in base of game and I used it only once,
+    so there aren't many examples.
+</pre>
+
+<p><code>pusher.<b>be()</b></code></p>
+
+<pre>
+    When you create pusher allways call this
+    and it will do everything I said.
+</pre>
+
+<p><code>pusher.<b>update()</b></code></p>
+<p><code>def update(self, x1, y1, image, obj, do1=None, do2=None, time=0, pos_do=None,
+    anti_pos_do=None, infinity=0):</code></p>
+
+<pre>
+    This function update pusher variables.
+    Notes:
+        This function doesn't use proces, if you want to change proces variable like noramal
+            varable or call pusher recall()
+        If you don't say what is variable value it will become None/0.
+</pre>
+
+<p><code>pusher.<b>recall()</b></code></p>
+
+<pre>
+    Simply set proces to 2.
+</pre>
+
+<hr>
+
+<h3>Part two: examples</h3>
+<h5>Examles of pushers and it's variables and functions</h5>
+
+<p>In this part I will use game class from first section and pusher code(lines: 6-62).</p>
+<p>I will also use this line for all fonts:</p>
+<p><code>self.normal = pygame.font.SysFont</code></p>
+<p>&nbsp;</p>
+<p>Example 1: simle pusher which doesn't do anything:</p>
+<p>Add two lines in game __inti__:</p>
+<p><code>self.hello_world = self.normal.render('Hello Worrld', 1, (0, 0, 0))</code></p>
+<p><code>self.hello = pusher(100, 100, self.hello_world, self)</code></p>
+<p>&nbsp;</p>
+<p>Also add these lines in while loop:</p>
+<p><code>self.hello.be()</code></p>
+<p><code>self.screen.fill((255, 255, 255))</code></p>
+<p><code>pygame.display.flip()</code></p>
+<p>&nbsp;</p>
+<p>Example 2: Exit button:<p>
+<p>Add these lines to game __init__:</p>
+<p><code>self.exit_text = self.normal.render('Exit', 1, (0, 0, 0))</code></p>
+<p><code>self.exit = pusher(550, 600, self.exit_text, self, 'exit')</code></p>
+<p>&nbsp;</p>
+<p>this line to game loop:</p>
+<p><code>self.exit.be()</p>
+<p>&nbsp;</p>
+<p>and these lines to game.change:</p>
+<pre>
+if self.what == 'exit'
+    self.running = False
+</pre>
+<p>&nbsp;</p>
+<p>Example 2.1: Exit with delay:</p>
+<p>Replace this line:</p>
+<p><code>self.exit = pusher(550, 600, self.exit_text, self, 'exit')</code></p>
+<p>&nbsp;</p>
+<p>with this:</p>
+<p><code>self.exit = pusher(550, 600, self.exit_text, self, do2='exit', time=1000)</code></p>
+<p>&nbsp;</p>
+<p>Example 2.2: Exit with pos_do and anti_pos_do:</p>
+<p>add this to creating exit pusher:</p>
+<p><code>pos_do='pos_do', anti_pos_do='anti_pos_do'</code></p>
+<p>&nbsp;</p>
+<p>This line goes in game.__init__:</p>
+<p><code>self.color = (255, 255, 255)</code></p>
+<p>&nbsp;</p>
+<p>Change this:</p>
+<p><code>self.screen.fill((255, 255, 255))</code></p>
+<p>&nbsp;</p>
+<p>to this:</p>
+<p><code>self.screen.fill(self.color)</code></p>
+<p>&nbsp;</p>
+<p>Add these lines to game.change():</p>
+<pre>
+if self.what == 'pos_do':
+    self.color = (255, 0, 0)
+if self.what == 'anti_pos_do':
+    self.color = (255, 255, 255)
+</pre>
+<p>&nbsp;</p>
+<p>Example 3: Creating start button:</p>
+<p>Create typical pusher:</p>
+<pre>
+self.start_text = self.normal.render('Start', 1, (0, 0, 0))
+self.start = pusher(550, 200, self.start_text, self, do2='play', time=1000)
+</pre>
+<p>and usual line:</p>
+<p><code>self.start.be()</code></p>
+<p>&nbsp;</p>
+<p>Put this on game.change():</p>
+<pre>
+if self.what == 'play':
+    self.exit.proces = 0
+    self.hello.proces = 0
+</pre>
+<p>and you are done.</p>
+<p>Example 3.1: Create color changing start button:</p>
+<p>Add this in creating pusher start:</p>
+<p><code>do1='shine', pos_do='pos_do2', anti_pos_do='anti_pos_do2'</code></p>
+<p>and these lines into the game.change():</p>
+<pre>
+if self.what == 'shine':
+    self.color = (0, 0, 255)
+if self.color != (0, 0, 255):
+    if self.what == 'pos_do':
+        self.color = (0, 255, 0)
+    if self.what == 'anti_pos_do':
+        self.color = (255, 255, 255)
+</pre>
+<p>Example 3.2: Create yes/no choosing pushers:</p>
+<p>Create some new lines in game.__init__:</p>
+<pre>
+self.shine_yes = self.normal.render('yes', 1, (70, 0, 0))
+self.usual_yes = self.normal.render('yes', 1, (0, 0, 0))
+self.yes = pusher(580, 400, self.usual_yes, self, do1='yes', infinity=2, proces=0)
+self.shine_no = self.normal.render('no', 1, (70, 0, 0))
+self.usual_no = self.normal.render('no', 1, (0, 0, 0))
+self.no = pusher(500, 400, self.usual_yes, self, do1='no', infinity=2, proces=0)
+</pre>
+<p>and some in main loop:</p>
+<pre>
+self.yes.be()
+self.no.be()
+</pre>
+<p>and in <code>if self.what == 'play':</code>:</p>
+<pre>
+self.yes.recall()
+self.no.recall()
+</pre>
+<p>also some lines in game.change():</p>
+<pre>
+if self.what == 'yes':
+    self.yes.update(580, 400, self.shine_yes, self, do1='yes', infinity=2)
+    self.no.update(500, 400, self.usual_no, self, do1='no', infinity=2)
+if self.what == 'yes':
+    self.no.update(500, 400, self.shine_no, self, do1='no', infinity=2)
+    self.yes.update(580, 400, self.usual_yes, self, do1='yes', infinity=2)
+</pre>
+
+<hr>
+
+<h2>Third section: rest of base information</h2>
+<h4>The rest of base will be explaind here</h4>
+<h4>Coming soon</h4>
+
+</body>
+</html>
