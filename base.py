@@ -94,7 +94,7 @@ class game:
         self.exit_text = self.normal.render('Exit', 1, (0, 0, 0))
         self.exit = pusher(550, 600, self.exit_text, self, 'blackscreen', time=5000)
         self.start_text = self.normal.render('Start', 1, (20, 20, 20))
-        self.start = pusher(550, 200, self.start_text, self, 'shine', 3000)
+        self.start = pusher(550, 200, self.start_text, self, 'shine', time=3000)
         self.main_text = self.normal.render('Main Menu', 1, (40, 40, 40))
         self.main_menu = pusher(550, 400, self.main_text, self, 'menu', proces=0)
         self.continue_text = self.normal.render('Continue', 1, (60, 60, 60))
